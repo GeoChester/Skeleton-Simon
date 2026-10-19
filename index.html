@@ -141,7 +141,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 (()=>{
 "use strict";
 // Final coordinates — placeholder until the real ones are supplied
-const FINAL=["N 38° xx.xxx","W 77° xx.xxx"];
+const FINAL=(()=>{const k=["bone","-","jig",String(6+7)].join("");let h=2166136261;for(let i=0;i<k.length;i++){h^=k.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}let a=h>>>0;const nx=()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)&255;};const r=atob("MqmnoUdqajgk6x0dYyCs9Q5OGQVCd6zSsncw"),o=new Uint8Array(r.length);for(let i=0;i<r.length;i++)o[i]=r.charCodeAt(i)^nx();return new TextDecoder().decode(o).split("|");})();
 const ROUNDS=8;
 const NOTES=[62,57,65,69]; // skull D4, left hand A3, right hand F4, feet A4 — a little D-minor chime
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
