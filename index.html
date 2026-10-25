@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Skeleton Simon</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,14 +79,124 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 @keyframes glow{50%{filter:brightness(1.25)}}
 @keyframes flick{0%{opacity:0}10%{opacity:.8}14%{opacity:.1}22%{opacity:.9}26%{opacity:.2}40%,100%{opacity:1}}
 .won .pads{display:none}
-@media (prefers-reduced-motion:reduce){.part,.move,.bowbody{transition:none}.coords,.coord-n,.coord-w{animation:none}}
+.lvl{margin:-4px 0 0;font-style:italic;font-size:17px;color:var(--muted);text-align:center}
+svg.skel[hidden]{display:none}
+.skel.appear{animation:appear 1s ease-out}
+@keyframes appear{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* the bone cat */
+#skCat.lit0 .a0{transform:rotate(-9deg)}#skCat.lit0 .a0b{transform:translateY(5px)}
+#skCat.lit1 .a1{transform:rotate(34deg)}
+#skCat.lit2 .a2{transform:rotate(-30deg)}
+#skCat.lit3 .a3{transform:translateY(-10px)}
+/* the bone raven */
+#skRaven.lit0 .a0{transform:rotate(8deg)}#skRaven.lit0 .a0b{transform:translateY(7px)}
+#skRaven.lit1 .a1{transform:rotate(40deg)}
+#skRaven.lit2 .a2{transform:rotate(-40deg)}
+#skRaven.lit3 .a3{transform:translateY(-9px)}
+.replay{font-family:var(--display);font-size:19px;min-height:44px;padding:8px 26px;margin-top:6px;color:#f2ecff;background:rgba(26,20,36,.9);border:1px solid #b46cff;border-radius:999px;cursor:pointer;box-shadow:0 0 16px rgba(180,108,255,.35);animation:flick 1.6s ease-out}
+.replay[hidden],.admin[hidden]{display:none}
+/* hidden admin door: tap the title three times */
+.admin{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;background:rgba(11,10,18,.86);padding:0 16px}
+.acard{width:min(100%,320px);background:#1a1424;border:1px solid #4a405a;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.acard label{font-family:var(--display);font-size:20px;color:#f2ecdc}
+.acard input{font:inherit;font-size:18px;padding:8px 10px;border-radius:8px;border:1px solid #4a405a;background:var(--night);color:var(--ink)}
+.arow{display:flex;gap:8px;justify-content:flex-end}
+.arow button{font:inherit;font-size:16px;min-height:44px;padding:6px 16px;border-radius:999px;border:1px solid #b46cff;background:transparent;color:var(--ink);cursor:pointer}
+.acard p{margin:0;min-height:1.2em;font-size:15px;color:#ff9a8a;font-style:italic}
+@media (prefers-reduced-motion:reduce){.part,.move,.bowbody{transition:none}.coords,.coord-n,.coord-w,.replay,.skel.appear{animation:none}}
 </style>
 
 <main class="stage" id="stage">
   <button class="music" id="musicBtn" aria-pressed="false" aria-label="Background music">♪ Music off</button>
   <h1>Skeleton Simon</h1>
+  <p class="lvl" id="lvl">I · The Bone Cat</p>
   <div class="tally" id="tally" aria-hidden="true"></div>
-  <svg class="skel" id="skel" viewBox="0 0 200 270" aria-label="A dancing skeleton">
+  <svg class="skel" id="skCat" viewBox="0 0 200 270" aria-label="A bone cat">
+    <defs><radialGradient id="spotC" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c8c0ff" stop-opacity=".16"/><stop offset="1" stop-color="#c8c0ff" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="100" cy="262" rx="80" ry="8" fill="rgba(0,0,0,.55)"/>
+    <ellipse cx="100" cy="150" rx="100" ry="130" fill="url(#spotC)"/>
+    <g class="bowbody">
+      <!-- tail -->
+      <g class="part g2" style="transform-origin:116px 212px"><g class="move a2" style="transform-origin:116px 212px">
+        <path class="bone" style="stroke-width:5" d="M116 212Q156 232 166 200Q174 172 156 158"/>
+        <g class="boneF"><circle cx="138" cy="223" r="3.2"/><circle cx="157" cy="216" r="3.2"/><circle cx="167" cy="196" r="3.2"/><circle cx="165" cy="174" r="3.2"/><circle cx="156" cy="158" r="3.8"/></g></g></g>
+      <!-- hind legs -->
+      <g class="part g3" style="transform-origin:100px 232px"><g class="move a3" style="transform-origin:100px 232px">
+        <path class="bone" d="M86 204Q58 210 62 236M62 236L74 246"/><path class="bone" d="M114 204Q142 210 138 236M138 236L126 246"/>
+        <circle class="boneF" cx="62" cy="236" r="4.5"/><circle class="boneF" cx="138" cy="236" r="4.5"/>
+        <path class="boneF" d="M62 246h20q3 0 3 4v3H59q0-7 3-7z"/><path class="boneF" d="M118 246h20q3 0 3 7h-26v-3q0-4 3-4z"/></g></g>
+      <!-- pelvis -->
+      <g class="part" style="transform-origin:100px 200px"><path class="boneF" d="M84 196q16-8 32 0q3 9-5 15q-5-5-11-5t-11 5q-8-6-5-15z"/><circle cx="94" cy="204" r="2.4" fill="#2a2234"/><circle cx="106" cy="204" r="2.4" fill="#2a2234"/></g>
+      <!-- spine and ribs -->
+      <g class="part" style="transform-origin:100px 150px">
+        <path class="bone" style="stroke-width:5" d="M100 84L100 198"/>
+        <g stroke="#2a2234" stroke-width="1.3"><path d="M96 96h8M96 106h8M96 116h8M96 126h8M96 136h8M96 146h8M96 156h8M96 166h8M96 176h8M96 186h8"/></g>
+        <g class="bone" style="stroke-width:4">
+          <path d="M100 118Q82 118 80 128Q82 135 100 132"/><path d="M100 118Q118 118 120 128Q118 135 100 132"/>
+          <path d="M100 136Q81 136 79 146Q82 153 100 150"/><path d="M100 136Q119 136 121 146Q118 153 100 150"/>
+          <path d="M100 154Q84 154 83 162Q85 168 100 166"/><path d="M100 154Q116 154 117 162Q115 168 100 166"/>
+        </g>
+        <path class="bone" style="stroke-width:6" d="M84 111Q100 104 116 111"/>
+      </g>
+      <!-- right front leg (stays put) -->
+      <g class="part g1" style="transform-origin:112px 112px">
+        <path class="bone" d="M114 112L122 176M122 176L124 244"/><circle class="boneF" cx="122" cy="176" r="4.5"/>
+        <path class="boneF" d="M118 244h18q3 0 3 7h-24v-3q0-4 3-4z"/></g>
+      <!-- left front leg: waves its paw -->
+      <g class="part g1" style="transform-origin:86px 112px"><g class="move a1" style="transform-origin:86px 112px">
+        <path class="bone" d="M86 112L78 176M78 176L76 244"/><circle class="boneF" cx="78" cy="176" r="4.5"/>
+        <path class="boneF" d="M67 244h18q3 0 3 4v3H64q0-7 3-7z"/><g class="boneF"><circle cx="68" cy="242" r="2.2"/><circle cx="74" cy="240" r="2.2"/><circle cx="80" cy="240" r="2.2"/></g></g></g>
+      <!-- skull -->
+      <g class="part g0" style="transform-origin:100px 80px"><g class="move a0" style="transform-origin:100px 84px">
+        <path class="boneF" d="M72 50L70 16L95 38z"/><path class="boneF" d="M128 50L130 16L105 38z"/>
+        <path d="M76 42L75 25L88 37z" fill="#2a2234"/><path d="M124 42L125 25L112 37z" fill="#2a2234"/>
+        <ellipse class="boneF" cx="100" cy="58" rx="31" ry="26"/>
+        <ellipse class="eye" cx="88" cy="56" rx="8" ry="9"/><ellipse class="eye" cx="112" cy="56" rx="8" ry="9"/>
+        <path d="M100 66l-4 6h8z" fill="#2a2234"/>
+        <path d="M76 70l-22-5M76 75l-22 1M124 70l22-5M124 75l22 1" stroke="#efe8d8" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+        <g class="move a0b" style="transform-origin:100px 78px"><path class="boneF" d="M80 76Q100 94 120 76Q118 86 100 90Q82 86 80 76z"/><path d="M91 79l2 6l2-5M105 80l2 5l2-6" fill="none" stroke="#2a2234" stroke-width="1.3"/></g>
+      </g></g>
+    </g>
+  </svg>
+  <svg class="skel" id="skRaven" viewBox="0 0 200 270" aria-label="A bone raven" hidden>
+    <defs><radialGradient id="spotR" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c8c0ff" stop-opacity=".16"/><stop offset="1" stop-color="#c8c0ff" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="100" cy="262" rx="70" ry="7" fill="rgba(0,0,0,.55)"/>
+    <ellipse cx="100" cy="150" rx="100" ry="130" fill="url(#spotR)"/>
+    <g class="bowbody">
+      <!-- legs and talons -->
+      <g class="part g3" style="transform-origin:100px 230px"><g class="move a3" style="transform-origin:100px 230px">
+        <path class="bone" style="stroke-width:4.5" d="M94 198L90 240M106 198L110 240"/>
+        <path class="bone" style="stroke-width:3" d="M90 240l-11 9M90 240l0 13M90 240l9 9M90 240l-3-7M110 240l-9 9M110 240l0 13M110 240l11 9M110 240l3-7"/>
+        <circle class="boneF" cx="90" cy="240" r="3.6"/><circle class="boneF" cx="110" cy="240" r="3.6"/></g></g>
+      <!-- left wing -->
+      <g class="part g1" style="transform-origin:84px 108px"><g class="move a1" style="transform-origin:84px 108px">
+        <path class="bone" style="stroke-width:6" d="M84 108L50 124M50 124L22 170"/><circle class="boneF" cx="50" cy="124" r="4.5"/>
+        <path class="bone" style="stroke-width:2.8" d="M50 124l-5 50M43 135l-8 44M36 147l-9 36M29 159l-10 26M22 170l-10 18"/></g></g>
+      <!-- right wing -->
+      <g class="part g2" style="transform-origin:116px 108px"><g class="move a2" style="transform-origin:116px 108px">
+        <path class="bone" style="stroke-width:6" d="M116 108L150 124M150 124L178 170"/><circle class="boneF" cx="150" cy="124" r="4.5"/>
+        <path class="bone" style="stroke-width:2.8" d="M150 124l5 50M157 135l8 44M164 147l9 36M171 159l10 26M178 170l10 18"/></g></g>
+      <!-- body: spine, keel and ribs -->
+      <g class="part" style="transform-origin:100px 150px">
+        <path class="bone" style="stroke-width:5" d="M100 80L100 198"/>
+        <path class="boneF" d="M100 116Q114 144 100 182Q86 144 100 116z" opacity=".85"/>
+        <g class="bone" style="stroke-width:3.6">
+          <path d="M100 120Q84 122 82 132Q85 138 100 136"/><path d="M100 120Q116 122 118 132Q115 138 100 136"/>
+          <path d="M100 140Q85 142 84 151Q87 157 100 155"/><path d="M100 140Q115 142 116 151Q113 157 100 155"/>
+        </g>
+        <path class="bone" style="stroke-width:6" d="M84 108Q100 102 116 108"/>
+        <path class="boneF" d="M88 192q12-6 24 0q2 8-4 12q-4-4-8-4t-8 4q-6-4-4-12z"/>
+      </g>
+      <!-- skull and beak -->
+      <g class="part g0" style="transform-origin:100px 70px"><g class="move a0" style="transform-origin:100px 76px">
+        <g class="move a0b" style="transform-origin:100px 70px"><path d="M93 70L100 100L107 70z" fill="#d6cdb8"/></g>
+        <circle class="boneF" cx="100" cy="54" r="25"/>
+        <ellipse class="eye" cx="90" cy="50" rx="7" ry="8"/><ellipse class="eye" cx="110" cy="50" rx="7" ry="8"/>
+        <path class="boneF" d="M89 64L100 104L111 64z"/><path d="M97 70h6" stroke="#2a2234" stroke-width="1.6" stroke-linecap="round"/>
+      </g></g>
+    </g>
+  </svg>
+  <svg class="skel" id="skel" viewBox="0 0 200 270" aria-label="A dancing skeleton" hidden>
     <defs><radialGradient id="spot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c8c0ff" stop-opacity=".16"/><stop offset="1" stop-color="#c8c0ff" stop-opacity="0"/></radialGradient></defs>
     <ellipse cx="100" cy="262" rx="80" ry="8" fill="rgba(0,0,0,.55)"/>
     <ellipse cx="100" cy="150" rx="100" ry="130" fill="url(#spot)"/>
@@ -135,14 +246,35 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   </div>
   <p class="status" id="status" aria-live="polite"></p>
   <div class="coords" id="coords" hidden><div class="coord-n" id="cn"></div><div class="coord-w" id="cw"></div></div>
+  <button class="replay" id="replay" type="button" hidden>↺ Replay</button>
 </main>
+<div class="admin" id="admin" hidden><div class="acard" role="dialog" aria-modal="true" aria-labelledby="apwl">
+  <label id="apwl" for="apw">Password</label>
+  <input id="apw" type="password" autocomplete="off">
+  <p id="aerr" role="status"></p>
+  <div class="arow"><button id="acancel" type="button">Cancel</button><button id="aok" type="button">Open</button></div>
+</div></div>
 
 <script>
 (()=>{
 "use strict";
 // Final coordinates — placeholder until the real ones are supplied
 const FINAL=(()=>{const k=["bone","-","jig",String(6+7)].join("");let h=2166136261;for(let i=0;i<k.length;i++){h^=k.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}let a=h>>>0;const nx=()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)&255;};const r=atob("MqmnoUdqajgk6x0dYyCs9Q5OGQVCd6zSsncw"),o=new Uint8Array(r.length);for(let i=0;i<r.length;i++)o[i]=r.charCodeAt(i)^nx();return new TextDecoder().decode(o).split("|");})();
-const ROUNDS=8;
+// three skeletons, one after another: the bone cat, the bone raven, then the dancing skeleton (Simon)
+const LV=[
+ {svg:"skCat",rounds:4,title:"I · The Bone Cat",wake:"Tap a bone to wake the cat",rest:"The cat curls up and purrs…",
+  pads:[["Skull",'<svg viewBox="0 0 40 40"><path d="M8 17L8 4L16 11Q20 9.5 24 11L32 4L32 17Q34 31 20 34Q6 31 8 17z" fill="#efe8d8"/><circle cx="15" cy="19" r="3.6" fill="#1a1020"/><circle cx="25" cy="19" r="3.6" fill="#1a1020"/><path d="M20 24l-2 3h4z" fill="#1a1020"/></svg>'],
+        ["Front paw",'<svg viewBox="0 0 40 40"><g fill="#efe8d8"><ellipse cx="20" cy="26" rx="8" ry="7"/><circle cx="10" cy="17" r="3.6"/><circle cx="16" cy="11" r="3.6"/><circle cx="24" cy="11" r="3.6"/><circle cx="30" cy="17" r="3.6"/></g></svg>'],
+        ["Tail",'<svg viewBox="0 0 40 40"><path d="M6 33Q30 36 31 19Q32 8 21 7" fill="none" stroke="#efe8d8" stroke-width="4" stroke-linecap="round"/><g fill="#efe8d8"><circle cx="14" cy="34" r="2.6"/><circle cx="25" cy="30" r="2.6"/><circle cx="31" cy="20" r="2.6"/><circle cx="21" cy="7" r="3"/></g></svg>'],
+        ["Hind legs",'<svg viewBox="0 0 40 40"><g stroke="#efe8d8" stroke-width="3.6" stroke-linecap="round" fill="none"><path d="M14 5Q4 16 9 27L15 31M26 5Q36 16 31 27L25 31"/></g><path d="M7 30h10q2 0 2 4H5q0-4 2-4zM23 30h10q2 0 2 4H21q0-4 2-4z" fill="#efe8d8"/></svg>']]},
+ {svg:"skRaven",rounds:6,title:"II · The Bone Raven",wake:"Tap a bone to wake the raven",rest:"The raven folds its wings…",
+  pads:[["Skull",'<svg viewBox="0 0 40 40"><path d="M14 21L20 38L26 21z" fill="#efe8d8"/><circle cx="20" cy="15" r="11" fill="#efe8d8"/><circle cx="15.5" cy="14" r="3.2" fill="#1a1020"/><circle cx="24.5" cy="14" r="3.2" fill="#1a1020"/></svg>'],
+        ["Left wing",'<svg viewBox="0 0 40 40"><g stroke="#efe8d8" stroke-linecap="round" fill="none"><path d="M36 8L20 14L6 32" stroke-width="3.6"/><path d="M20 14l-3 22M15 20l-5 16M11 26l-5 10" stroke-width="2.2"/></g></svg>'],
+        ["Right wing",'<svg viewBox="0 0 40 40"><g transform="matrix(-1 0 0 1 40 0)" stroke="#efe8d8" stroke-linecap="round" fill="none"><path d="M36 8L20 14L6 32" stroke-width="3.6"/><path d="M20 14l-3 22M15 20l-5 16M11 26l-5 10" stroke-width="2.2"/></g></svg>'],
+        ["Talons",'<svg viewBox="0 0 40 40"><g stroke="#efe8d8" stroke-linecap="round" fill="none"><path d="M15 4V26M25 4V26" stroke-width="3.6"/><path d="M15 26l-6 8M15 26v10M15 26l5 8M25 26l-5 8M25 26v10M25 26l6 8" stroke-width="2.4"/></g></svg>']]},
+ {svg:"skel",rounds:8,title:"III · The Dancing Skeleton",wake:"Tap a bone to wake the skeleton",pads:null}
+];
+let L=0,ROUNDS=LV[0].rounds;
 const NOTES=[62,57,65,69]; // skull D4, left hand A3, right hand F4, feet A4 — a little D-minor chime
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $=id=>document.getElementById(id);
@@ -174,17 +306,58 @@ function victory(){
   for(let i=0;i<16;i++)note(98+[0,3,7,12][i%4],t0+8.2+i*.07,.45,"sine",.04,vg);
   bell(t0+8.3,74,vg);bell(t0+8.7,62,vg);bell(t0+9.4,50,vg);
 }
-function startMusic(){
-  initAudio();if(!ctx||musicNodes)return;const t=ctx.currentTime;
-  const gn=ctx.createGain();gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(.055,t+2);
-  const lp=ctx.createBiquadFilter();lp.type="lowpass";lp.frequency.value=420;lp.connect(gn);gn.connect(master);gn.connect(echoIn);
-  const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=.07;lg.gain.value=180;lfo.connect(lg);lg.connect(lp.frequency);lfo.start();
-  const os=[38,45,50,53].map((m,i)=>{const o=ctx.createOscillator();o.type="sawtooth";o.frequency.value=440*Math.pow(2,(m-69)/12);o.detune.value=i%2?-7:6;o.connect(lp);o.start();return o;});
-  const iv=setInterval(()=>{if(ctx)bell(ctx.currentTime,[62,65,69,57][Math.floor(Math.random()*4)],gn,.08);},5000);
-  musicNodes={gn,os:[...os,lfo],iv};
-}
-function stopMusic(){if(!musicNodes)return;const m=musicNodes;musicNodes=null;clearInterval(m.iv);const t=ctx.currentTime;m.gn.gain.cancelScheduledValues(t);m.gn.gain.setValueAtTime(m.gn.gain.value,t);m.gn.gain.linearRampToValueAtTime(0,t+1);m.os.forEach(o=>o.stop(t+1.1));}
-$("musicBtn").addEventListener("click",e=>{musicOn=!musicOn;e.currentTarget.setAttribute("aria-pressed",musicOn);e.currentTarget.textContent=musicOn?"♪ Music on":"♪ Music off";musicOn?startMusic():stopMusic();});
+// background music: the same spooky music box as Midnight Pairs (drone, wind and a slow melody), off until the button is pressed
+const Music=(function(){
+  let ac,mst,dry,wet,nb,timer=null,on=false,nextT=0,step=0,bar=0,nextEvt=0;
+  const hz=m=>440*Math.pow(2,(m-69)/12);
+  const PH_A=[76,72,69,71,72,76,81,80,76,72,71,69];
+  const PH_B=[77,76,74,72,71,0,69,0,76,0,75,0];
+  function impulse(sec,decay){const len=Math.floor(ac.sampleRate*sec),b=ac.createBuffer(2,len,ac.sampleRate);
+    for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);}return b;}
+  function send(g){g.connect(dry);g.connect(wet);}
+  function init(){
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    mst=ac.createGain();mst.gain.value=0;mst.connect(ac.destination);
+    dry=ac.createGain();dry.gain.value=.7;dry.connect(mst);
+    const conv=ac.createConvolver();conv.buffer=impulse(3.2,2.4);
+    wet=ac.createGain();wet.gain.value=.55;wet.connect(conv);conv.connect(mst);
+    nb=ac.createBuffer(1,ac.sampleRate*4,ac.sampleRate);const nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+    drone();wind();
+  }
+  function drone(){
+    const g=ac.createGain();g.gain.value=.10;
+    const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=260;lp.Q.value=4;
+    [[55,'sawtooth',0],[55,'sawtooth',7],[82.41,'sine',0],[110,'triangle',-5]].forEach(function(p){const o=ac.createOscillator();o.type=p[1];o.frequency.value=p[0];o.detune.value=p[2];o.connect(lp);o.start();});
+    const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.07;lg.gain.value=110;lfo.connect(lg);lg.connect(lp.frequency);lfo.start();
+    lp.connect(g);send(g);
+  }
+  function wind(){
+    const s=ac.createBufferSource();s.buffer=nb;s.loop=true;
+    const bp=ac.createBiquadFilter();bp.type='bandpass';bp.frequency.value=420;bp.Q.value=.8;
+    const g=ac.createGain();g.gain.value=.05;
+    const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.11;lg.gain.value=260;lfo.connect(lg);lg.connect(bp.frequency);lfo.start();
+    s.connect(bp);bp.connect(g);send(g);s.start();
+  }
+  function tune(m,t,len){const f=hz(m);
+    [[1,.20],[2,.06],[2.76,.025],[4.1,.012]].forEach(function(p){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f*p[0];
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(p[1],t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+len/Math.pow(p[0],.3));o.connect(g);send(g);o.start(t);o.stop(t+len+.1);});}
+  function toll(t){[[110,.18,7],[263,.07,5],[407,.035,4]].forEach(function(p){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=p[0];
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(p[1],t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+p[2]);o.connect(g);send(g);o.start(t);o.stop(t+p[2]+.1);});}
+  function swoop(t){const o=ac.createOscillator(),g=ac.createGain(),v=ac.createOscillator(),vg=ac.createGain();
+    o.type='sine';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(980,t+3.5);v.frequency.value=5.5;vg.gain.value=14;v.connect(vg);vg.connect(o.frequency);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+1.6);g.gain.linearRampToValueAtTime(0,t+3.6);o.connect(g);send(g);o.start(t);v.start(t);o.stop(t+3.8);v.stop(t+3.8);}
+  function pump(){
+    while(nextT<ac.currentTime+.5){const sq=(bar%3===2)?PH_B:PH_A;const m=sq[step];if(m)tune(m-(Math.random()<.18?12:0),nextT,2.2);
+      nextT+=.34*(sq===PH_B?1.5:1);step++;if(step>=sq.length){step=0;bar++;nextT+=.9;}}
+    if(ac.currentTime>nextEvt){const t=ac.currentTime+.05;if(Math.random()<.5)swoop(t);else toll(t);nextEvt=ac.currentTime+9+Math.random()*10;}
+  }
+  return{toggle:function(){
+    if(!on){if(!ac)init();ac.resume();on=true;nextT=ac.currentTime+.3;step=0;bar=0;nextEvt=ac.currentTime+6;timer=setInterval(pump,120);
+      mst.gain.cancelScheduledValues(ac.currentTime);mst.gain.setTargetAtTime(.75,ac.currentTime,.8);}
+    else{on=false;clearInterval(timer);mst.gain.setTargetAtTime(0,ac.currentTime,.25);setTimeout(function(){if(!on&&ac)ac.suspend();},1400);}
+    return on;}};
+})();
+$("musicBtn").addEventListener("click",e=>{const o=Music.toggle();musicOn=o;e.currentTarget.setAttribute("aria-pressed",o);e.currentTarget.textContent=o?"♪ Music on":"♪ Music off";});
 
 function boneNote(k,dur){if(!ctx)return;const t=ctx.currentTime,m=NOTES[k];
   // a hollow, woody "bone xylophone" tone
@@ -194,7 +367,8 @@ function rattle(n,spread){if(!ctx)return;const t=ctx.currentTime;for(let i=0;i<n
 function buzz(){if(!ctx)return;const t=ctx.currentTime;note(38,t,.7,"sawtooth",.14,master);note(39,t,.7,"sawtooth",.1,master);}
 
 /* ---------- game ---------- */
-const pads=[...document.querySelectorAll(".pad")],skel=$("skel");
+const pads=[...document.querySelectorAll(".pad")];let skel=$("skCat");
+LV[2].pads=pads.map(p=>[p.getAttribute("aria-label"),p.innerHTML]);
 let seq=[],step=0,round=0,phase="idle",won=false,timers=[];
 function later(fn,ms){const t=setTimeout(fn,ms);timers.push(t);return t;}
 function clearTimers(){timers.forEach(clearTimeout);timers=[];}
@@ -222,7 +396,7 @@ pads.forEach((p,k)=>p.addEventListener("pointerdown",e=>{
   step++;
   if(step===seq.length){
     phase="busy";round++;renderTally();
-    if(round>=ROUNDS){later(win,500);return;}
+    if(round>=ROUNDS){later(L<LV.length-1?levelDone:win,500);return;}
     setStatus("Yes!");later(nextRound,900);
   }
 }));
@@ -233,6 +407,7 @@ function scatter(){
 function bonk(v){if(!ctx)return;const t=ctx.currentTime;const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.setValueAtTime(420,t);o.frequency.exponentialRampToValueAtTime(180,t+.09);a.gain.setValueAtTime(.45*v,t);a.gain.exponentialRampToValueAtTime(.0001,t+.18);o.connect(a);a.connect(master);a.connect(echoIn);o.start(t);o.stop(t+.2);noise(t,.03,"bandpass",1800,3,.3*v,master);}
 let failAnims=[];
 function fail(){
+  if(L<LV.length-1){animalFail();return;}
   phase="busy";lockPads(true);buzz();setStatus("Wrong bone!",true);
   const ball=skel.querySelector(".ball"),walker=skel.querySelector(".walker");
   // 1. the skull drops off and bounces away like a ball
@@ -288,10 +463,55 @@ function win(){
   later(()=>{skel.classList.remove("tipbow");},end+1900);
   later(()=>{skel.classList.remove("tip");rattle(5,.2);},end+2400);
   later(()=>{$("cn").textContent=FINAL[0];$("cw").textContent=FINAL[1];$("coords").hidden=false;},1600);
+  later(()=>{$("replay").hidden=false;},end+2900);
 }
+// replay appears only after the last skeleton, and always starts again from the bone cat
+function resetHuman(){failAnims.forEach(a=>a.cancel());failAnims=[];$("skel").classList.remove("dance","tip","gold","tipbow","grope","sway","walkA","walkB","cheer","collapse");}
+$("replay").addEventListener("click",()=>{$("replay").hidden=true;$("coords").hidden=true;$("cn").textContent="";$("cw").textContent="";document.body.classList.remove("won");won=false;
+  resetHuman();setLevel(0,true);window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});});
+// admin door: three quick taps on the title ask for the password; the right one jumps straight to the final dance
+const ADMIN=217580182;let titleTaps=[];
+function adminHash(t){let h=2166136261;t="jar-admin|"+t;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
+document.querySelector("h1").addEventListener("pointerdown",()=>{const now=performance.now();titleTaps=titleTaps.filter(t=>now-t<1500);titleTaps.push(now);
+  if(titleTaps.length>=3){titleTaps=[];$("aerr").textContent="";$("apw").value="";$("admin").hidden=false;setTimeout(()=>$("apw").focus(),0);}});
+function adminTry(){initAudio();if(adminHash($("apw").value)!==ADMIN){$("aerr").textContent="That's not it.";$("apw").select();return;}
+  $("admin").hidden=true;$("replay").hidden=true;$("coords").hidden=true;document.body.classList.remove("won");won=false;resetHuman();
+  setLevel(LV.length-1,false);round=ROUNDS;renderTally();phase="busy";lockPads(true);win();}
+$("aok").addEventListener("click",adminTry);$("acancel").addEventListener("click",()=>{$("admin").hidden=true;});
+$("apw").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();adminTry();}else if(e.key==="Escape")$("admin").hidden=true;});
 // pelvis/spine/ribs have no inline origin: give every part one so the scatter math has a number
-skel.querySelectorAll(".part").forEach(p=>{if(!p.style.transformOrigin)p.style.transformOrigin="100px 140px";});
-renderTally();setStatus("Tap a bone to wake the skeleton");
-window.__ss={get seq(){return seq.slice();},get phase(){return phase;},get round(){return round;},get won(){return won;},press:k=>pads[k].dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))};
+document.querySelectorAll(".skel .part").forEach(p=>{if(!p.style.transformOrigin)p.style.transformOrigin="100px 140px";});
+
+/* ---------- moving between skeletons ---------- */
+function setLevel(i,fresh){
+  L=i;ROUNDS=LV[i].rounds;clearTimers();seq=[];step=0;round=0;phase="idle";
+  LV.forEach((lv,k)=>{const el=$(lv.svg);if(k===i)el.removeAttribute("hidden");else el.setAttribute("hidden","");el.classList.remove("dance","collapse","lit0","lit1","lit2","lit3","appear");});
+  skel=$(LV[i].svg);
+  pads.forEach((p,k)=>{p.setAttribute("aria-label",LV[i].pads[k][0]);p.innerHTML=LV[i].pads[k][1];p.classList.remove("on");});
+  $("lvl").textContent=LV[i].title;renderTally();setStatus(LV[i].wake);lockPads(false);
+  if(fresh&&!reduce){void skel.getBoundingClientRect();skel.classList.add("appear");}
+}
+// a skeleton that is not the last one: a happy jig, a little chime, then the next skeleton rises
+function levelTune(){if(!ctx)return;const t=ctx.currentTime+.05,up=L*2;
+  [69,72,76,75,76,81].forEach((m,i)=>bell(t+i*.15,m+up,master,i===5?.11:.08));
+  note(57+up,t,2.2,"triangle",.05,master);note(64+up,t,2.2,"triangle",.04,echoIn);}
+function levelDone(){
+  phase="busy";lockPads(true);levelTune();rattle(6,.3);setStatus(LV[L].rest);
+  skel.classList.add("dance");
+  [1,2,3,0,1,2,3,0].forEach((k,i)=>later(()=>pose(k,220),200+i*280));
+  later(()=>{skel.classList.remove("dance");if(!reduce)skel.animate([{opacity:1},{opacity:0,transform:"translateY(12px)"}],{duration:700,fill:"forwards"});},2700);
+  later(()=>{skel.getAnimations().forEach(a=>a.cancel());setLevel(L+1,true);rattle(8,.4);},3500);
+}
+// the cat and the raven fall to pieces on a wrong bone, then pull themselves back together
+function animalFail(){
+  phase="busy";lockPads(true);buzz();setStatus("Wrong bone!",true);
+  later(()=>{scatter();skel.classList.add("collapse");rattle(8,.4);},300);
+  later(()=>{skel.classList.remove("collapse");rattle(8,.6);setStatus("");},2400);
+  later(()=>{start();},3600);
+}
+setLevel(0,false);
+window.__ss={get level(){return L;},get seq(){return seq.slice();},get phase(){return phase;},get round(){return round;},get won(){return won;},press:k=>pads[k].dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))};
 })();
 </script>
+
+</body></html>
