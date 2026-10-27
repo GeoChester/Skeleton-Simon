@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Skeleton Simon</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,15 +94,7 @@ svg.skel[hidden]{display:none}
 #skRaven.lit2 .a2{transform:rotate(-40deg)}
 #skRaven.lit3 .a3{transform:translateY(-9px)}
 .replay{font-family:var(--display);font-size:19px;min-height:44px;padding:8px 26px;margin-top:6px;color:#f2ecff;background:rgba(26,20,36,.9);border:1px solid #b46cff;border-radius:999px;cursor:pointer;box-shadow:0 0 16px rgba(180,108,255,.35);animation:flick 1.6s ease-out}
-.replay[hidden],.admin[hidden]{display:none}
-/* hidden admin door: tap the title three times */
-.admin{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;background:rgba(11,10,18,.86);padding:0 16px}
-.acard{width:min(100%,320px);background:#1a1424;border:1px solid #4a405a;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
-.acard label{font-family:var(--display);font-size:20px;color:#f2ecdc}
-.acard input{font:inherit;font-size:18px;padding:8px 10px;border-radius:8px;border:1px solid #4a405a;background:var(--night);color:var(--ink)}
-.arow{display:flex;gap:8px;justify-content:flex-end}
-.arow button{font:inherit;font-size:16px;min-height:44px;padding:6px 16px;border-radius:999px;border:1px solid #b46cff;background:transparent;color:var(--ink);cursor:pointer}
-.acard p{margin:0;min-height:1.2em;font-size:15px;color:#ff9a8a;font-style:italic}
+.replay[hidden]{display:none}
 @media (prefers-reduced-motion:reduce){.part,.move,.bowbody{transition:none}.coords,.coord-n,.coord-w,.replay,.skel.appear{animation:none}}
 </style>
 
@@ -248,17 +240,11 @@ svg.skel[hidden]{display:none}
   <div class="coords" id="coords" hidden><div class="coord-n" id="cn"></div><div class="coord-w" id="cw"></div></div>
   <button class="replay" id="replay" type="button" hidden>↺ Replay</button>
 </main>
-<div class="admin" id="admin" hidden><div class="acard" role="dialog" aria-modal="true" aria-labelledby="apwl">
-  <label id="apwl" for="apw">Password</label>
-  <input id="apw" type="password" autocomplete="off">
-  <p id="aerr" role="status"></p>
-  <div class="arow"><button id="acancel" type="button">Cancel</button><button id="aok" type="button">Open</button></div>
-</div></div>
 
 <script>
 (()=>{
 "use strict";
-// Final coordinates — placeholder until the real ones are supplied
+// final coordinates, scrambled
 const FINAL=(()=>{const k=["bone","-","jig",String(6+7)].join("");let h=2166136261;for(let i=0;i<k.length;i++){h^=k.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}let a=h>>>0;const nx=()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)&255;};const r=atob("MqmnoUdqajgk6x0dYyCs9Q5OGQVCd6zSsncw"),o=new Uint8Array(r.length);for(let i=0;i<r.length;i++)o[i]=r.charCodeAt(i)^nx();return new TextDecoder().decode(o).split("|");})();
 // three skeletons, one after another: the bone cat, the bone raven, then the dancing skeleton (Simon)
 const LV=[
@@ -469,16 +455,6 @@ function win(){
 function resetHuman(){failAnims.forEach(a=>a.cancel());failAnims=[];$("skel").classList.remove("dance","tip","gold","tipbow","grope","sway","walkA","walkB","cheer","collapse");}
 $("replay").addEventListener("click",()=>{$("replay").hidden=true;$("coords").hidden=true;$("cn").textContent="";$("cw").textContent="";document.body.classList.remove("won");won=false;
   resetHuman();setLevel(0,true);window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});});
-// admin door: three quick taps on the title ask for the password; the right one jumps straight to the final dance
-const ADMIN=217580182;let titleTaps=[];
-function adminHash(t){let h=2166136261;t="jar-admin|"+t;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
-document.querySelector("h1").addEventListener("pointerdown",()=>{const now=performance.now();titleTaps=titleTaps.filter(t=>now-t<1500);titleTaps.push(now);
-  if(titleTaps.length>=3){titleTaps=[];$("aerr").textContent="";$("apw").value="";$("admin").hidden=false;setTimeout(()=>$("apw").focus(),0);}});
-function adminTry(){initAudio();if(adminHash($("apw").value)!==ADMIN){$("aerr").textContent="That's not it.";$("apw").select();return;}
-  $("admin").hidden=true;$("replay").hidden=true;$("coords").hidden=true;document.body.classList.remove("won");won=false;resetHuman();
-  setLevel(LV.length-1,false);round=ROUNDS;renderTally();phase="busy";lockPads(true);win();}
-$("aok").addEventListener("click",adminTry);$("acancel").addEventListener("click",()=>{$("admin").hidden=true;});
-$("apw").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();adminTry();}else if(e.key==="Escape")$("admin").hidden=true;});
 // pelvis/spine/ribs have no inline origin: give every part one so the scatter math has a number
 document.querySelectorAll(".skel .part").forEach(p=>{if(!p.style.transformOrigin)p.style.transformOrigin="100px 140px";});
 
@@ -510,7 +486,6 @@ function animalFail(){
   later(()=>{start();},3600);
 }
 setLevel(0,false);
-window.__ss={get level(){return L;},get seq(){return seq.slice();},get phase(){return phase;},get round(){return round;},get won(){return won;},press:k=>pads[k].dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))};
 })();
 </script>
 
